@@ -3,7 +3,9 @@ import React from "react";
 const TitleSearch = () => {
   
     return (
-      <div>Title Search</div>
+      <div>Title Search
+        <button>Search By Title</button>
+      </div>
     );
   };
   
