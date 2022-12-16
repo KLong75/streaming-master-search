@@ -1,215 +1,281 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 
-import { Button, InputLabel, MenuItem, FormControl, Select  } from '@mui/material';
+import { Box, TextField, MenuItem } from '@mui/material';
 
-import { 
-  fetchActionTitles, 
-  fetchComedyTitles, 
-  fetchDocumentaryTitles, 
-  fetchDramaTitles, 
-  fetchFantasyTitles, 
-  fetchHistoryTitles,
-  fetchHorrorTitles,
-  fetchMusicalTitles,
-  fetchMysteryTitles,
-  fetchRomanceTitles,
-  fetchScifiTitles,
-  fetchThrillerTitles,
-  fetchWarTitles
-} from '../../utils/apiCalls';
+const genreOptions = [
+  {
+    value: '1',
+    label: 'Action'
+  },
+  {
+    value: '39',
+    label: 'Action & Adventure'
+  },
+  {
+    value: '2',
+    label: 'Adventure'
+  },
+  {
+    value: '3',
+    label: 'Animation'
+  },
+  {
+    value: '33',
+    label: 'Anime'
+  },
+  {
+    value: '31',
+    label: 'Biography'
+  },
+  {
+    value: '4',
+    label: 'Comedy'
+  },
+  {
+    value: '5',
+    label: 'Crime'
+  },
+  {
+    value: '6',
+    label: 'Documentary'
+  },
+  {
+    value: '7',
+    label: 'Drama'
+  },
+  {
+    value: '8',
+    label: 'Family'
+  },
+  {
+    value: '9',
+    label: 'Fantasy'
+  },
+  {
+    value: '34',
+    label: 'Food'
+  },
+  {
+    value: '28',
+    label: 'Game Show'
+  },
+  {
+    value: '10',
+    label: 'History'
+  },
+  {
+    value: '11',
+    label: 'Horror'
+  },
+  {
+    value: '21',
+    label: 'Kids'
+  },
+  {
+    value: '12',
+    label: 'Music'
+  },
+  {
+    value: '32',
+    label: 'Musical'
+  },
+  {
+    value: '13',
+    label: 'Mystery'
+  },
+  {
+    value: '36',
+    label: 'Nature'
+  },
+  {
+    value: '22',
+    label: 'News'
+  },
+  {
+    value: '23',
+    label: 'Reality'
+  },
+  {
+    value: '14',
+    label: 'Romance'
+  },
+  {
+    value: '40',
+    label: 'Sci-Fi & Fantasy'
+  },
+  {
+    value: '15',
+    label: 'Science Fiction'
+  },
+  {
+    value: '25',
+    label: 'Soap'
+  },
+  {
+    value: '29',
+    label: 'Sports'
+  },
+  {
+    value: '37',
+    label: 'Supernatural'
+  },
+  {
+    value: '26',
+    label: 'Talk'
+  },
+  {
+    value: '17',
+    label: 'Thriller'
+  },
+  {
+    value: '35',
+    label: 'Travel'
+  },
+  {
+    value: '38',
+    label: 'TV Movie'
+  },
+  {
+    value: '18',
+    label: 'War'
+  },
+  {
+    value: '41',
+    label: 'War & Politics'
+  },
+  {
+    value: '19',
+    label: 'Western'
+  },
+];
 
 const GenreSearch = () => {
+
   const [genreSearchResults, setGenreSearchResults] = useState([]);
-  const [formState, setFormState] = useState({
-    genre: ''
-  });
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  }
+  const [selectedGenre, setSelectedGenre] = useState('');
 
-  async function fetchGenres() {
-    fetch('https://api.watchmode.com/v1/genres/?apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
-      
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-  }
+  // const handleChange = (event) => {
+  //   setSelectedGenre(event.target.value);
+  //   console.log(event.target.value);
+  //   const selectedGenreCode = event.target.value;
+    
+  //   fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
 
-  async function fetchResults() {
-    fetch('https://api.watchmode.com/v1/list-titles?genres=39&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
-      setGenreSearchResults(data);
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-  }
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log(data)
+  //     const titleData = data;
+  //     console.log(titleData)
+  //     console.log(titleData.titles[0].title)
+  //     setGenreSearchResults(titleData)
+  //     setSelectedGenre('');
+  //   })
+  //   .catch((err) => {
+  //     console.log(err.message);
+  //   });
+  // }
 
-  const handleFormSubmit = async (event)=> {
+
+  const handleChange = async (event) => {
     event.preventDefault();
-    fetchResults();
-    fetchGenres();
-    setFormState({
-      genre: ''
-    });
-    // window.location.assign('/search_results');
-  };
+    setSelectedGenre(event.target.value);
+    console.log(event.target.value);
+    const selectedGenreCode = event.target.value;
+    
+    try {
 
+    const response = await fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
 
-  const handleActionBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchActionTitles();
+    if (!response.ok) {
+      throw new Error('Something went wrong')
+    }
+
+    const { items } = await response.json();
+    
+    const titleData = items.map((title) => ({
+      id: title.id,
+      title: title.titleInfo.title,
+      type: title.titleInfo.type,
+      year: title.titleInfo.year
+    }));
+
+    console.log(titleData);
+
+    setGenreSearchResults(titleData);
+    setSelectedGenre('');
+  } catch (err) {
+    console.error(err);
   }
+};
 
-  const handleComedyBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchComedyTitles();
-  }
+  
 
-  const handleDocBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchDocumentaryTitles();
-  }
-
-  const handleDramaBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchDramaTitles();
-  }
-
-  const handleFantasyBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchFantasyTitles();
-  }
-
-  const handleHistoryBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchHistoryTitles();
-  }
-
-  const handleHorrorBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchHorrorTitles();
-  }
-
-  const handleMusicalBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchMusicalTitles();
-  }
-
-  const handleMysteryBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchMysteryTitles();
-  }
-
-  const handleRomanceBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchRomanceTitles();
-  }
-
-  const handleScifiBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchScifiTitles();
-  }
-
-  const handleThrillerBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchThrillerTitles();
-  }
-
-  const handleWarBtnClick = async(event)=> {
-    event.preventDefault();
-    fetchWarTitles();
-  }
-
- 
+  
 
 
 
   return (
-    <>
     <div>
-      <form onSubmit={handleFormSubmit}>
-      <FormControl sx={{ m: 1, minWidth: 160}} size='small' >
-        <InputLabel>Select Genre</InputLabel>
-        <Select 
-          label='genre'
-          value={formState.genre}
-          name='genre'
-          onChange={handleChange}
-        >
-          <MenuItem value='1' genre='1'>Action</MenuItem>       
-          <MenuItem value='4'>Comedy</MenuItem>
-          <MenuItem value='6'>Documentary</MenuItem>
-          <MenuItem value='7'>Drama</MenuItem>
-          <MenuItem value='40'>Fantasy</MenuItem>
-          <MenuItem value='10'>History</MenuItem>
-          <MenuItem value='11'>Horror</MenuItem>
-          <MenuItem value='32'>Musical</MenuItem>
-          <MenuItem value='13'>Mystery</MenuItem>
-          <MenuItem value='14'>Romance</MenuItem>
-          <MenuItem value='15'>Science Fiction</MenuItem>
-          <MenuItem value='17'>Thriller</MenuItem>
-          <MenuItem value='18'>War</MenuItem>
-        </Select>           
-      </FormControl>
-      <Button variant='contained' type='submit'>Submit</Button>
-      </form>
-      </div>
-      <div>
-        <form onSubmit={handleActionBtnClick}>
-          <Button variant='contained' type='submit'>Action</Button>
-        </form>
-        <form onSubmit={handleComedyBtnClick}>
-          <Button variant='contained' type='submit'>Comedy</Button>
-        </form>
-        <form onSubmit={handleDocBtnClick}>
-          <Button variant='contained' type='submit'>Documentary</Button>
-        </form>
-        <form onSubmit={handleDramaBtnClick}>
-          <Button variant='contained' type='submit'>Drama</Button>
-        </form>
-        <form onSubmit={handleFantasyBtnClick}>
-          <Button variant='contained' type='submit'>Fantasy</Button>
-        </form>
-        <form onSubmit={handleHistoryBtnClick}>
-          <Button variant='contained' type='submit'>History</Button>
-        </form>
-        <form onSubmit={handleHorrorBtnClick}>
-          <Button variant='contained' type='submit'>Horror</Button>
-        </form>
-        <form onSubmit={handleMusicalBtnClick}>
-          <Button variant='contained' type='submit'>Musical</Button>
-        </form>
-        <form onSubmit={handleMysteryBtnClick}>
-          <Button variant='contained' type='submit'>Mystery</Button>
-        </form>
-        <form onSubmit={handleRomanceBtnClick}>
-          <Button variant='contained' type='submit'>Romance</Button>
-        </form>
-        <form onSubmit={handleScifiBtnClick}>
-          <Button variant='contained' type='submit'>Science Fiction</Button>
-        </form>
-        <form onSubmit={handleThrillerBtnClick}>
-          <Button variant='contained' type='submit'>Thriller</Button>
-        </form>
-        <form onSubmit={handleWarBtnClick}>
-          <Button variant='contained' type='submit'>War</Button>
-        </form>
+      <Box
+        component='form'
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete='off'
+      >
+        <div>
+          <TextField
+            id='genre-select'
+            select
+            size='small'
+            label='Select Genre'
+            value={selectedGenre}
+            onChange={handleChange}
+            helperText='Please select a genre'
+          >
+            {genreOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField> 
+        </div>
+      </Box>
 
+
+
+
+
+
+
+
+      <div>
+        {genreSearchResults.length
+          ? `Viewing ${genreSearchResults.length} results:`
+          : 'Select a genre to begin'}
+
+        {genreSearchResults.map((title) => {
+          return (
+            <div key = {title.id}>
+              {title.title}
+              {title.type}
+              {title.year}
+
+
+            </div>
+          )
+        })}
+     
+    
       </div>
-      </>
-    );
+    </div>
+
+);
 };
   
 export default GenreSearch;
+
+
+   

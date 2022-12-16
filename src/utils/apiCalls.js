@@ -12,6 +12,7 @@ export const fetchGenres = () => {
   }
 
 // fetch titles by genre
+
 // Action
 export const fetchActionTitles = () => {
     fetch('https://api.watchmode.com/v1/list-titles?genres=1&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
