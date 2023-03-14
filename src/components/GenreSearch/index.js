@@ -155,59 +155,60 @@ const GenreSearch = () => {
 
   const [selectedGenre, setSelectedGenre] = useState('');
 
-  // const handleChange = (event) => {
-  //   setSelectedGenre(event.target.value);
-  //   console.log(event.target.value);
-  //   const selectedGenreCode = event.target.value;
-    
-  //   fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
-
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log(data)
-  //     const titleData = data;
-  //     console.log(titleData)
-  //     console.log(titleData.titles[0].title)
-  //     setGenreSearchResults(titleData)
-  //     setSelectedGenre('');
-  //   })
-  //   .catch((err) => {
-  //     console.log(err.message);
-  //   });
-  // }
-
-
-  const handleChange = async (event) => {
-    event.preventDefault();
+  const handleChange = (event) => {
     setSelectedGenre(event.target.value);
     console.log(event.target.value);
     const selectedGenreCode = event.target.value;
     
-    try {
+    fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
 
-    const response = await fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
-
-    if (!response.ok) {
-      throw new Error('Something went wrong')
-    }
-
-    const { items } = await response.json();
-    
-    const titleData = items.map((title) => ({
-      id: title.id,
-      title: title.titleInfo.title,
-      type: title.titleInfo.type,
-      year: title.titleInfo.year
-    }));
-
-    console.log(titleData);
-
-    setGenreSearchResults(titleData);
-    setSelectedGenre('');
-  } catch (err) {
-    console.error(err);
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      const titleData = data;
+      console.log(titleData)
+      console.log(titleData.titles[0].title)
+      setGenreSearchResults(titleData)
+      setSelectedGenre('');
+      console.log(genreSearchResults)
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
   }
-};
+
+
+//   const handleChange = async (event) => {
+//     event.preventDefault();
+//     setSelectedGenre(event.target.value);
+//     console.log(event.target.value);
+//     const selectedGenreCode = event.target.value;
+    
+//     try {
+
+//     const response = await fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
+
+//     if (!response.ok) {
+//       throw new Error('Something went wrong')
+//     }
+
+//     const { items } = await response.json();
+    
+//     const titleData = items.map((title) => ({
+//       id: title.id,
+//       title: title.titleInfo.title,
+//       type: title.titleInfo.type,
+//       year: title.titleInfo.year
+//     }));
+
+//     console.log(titleData);
+
+//     setGenreSearchResults(titleData);
+//     setSelectedGenre('');
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
 
   
 
@@ -251,7 +252,7 @@ const GenreSearch = () => {
 
 
 
-      <div>
+      {/* <div>
         {genreSearchResults.length
           ? `Viewing ${genreSearchResults.length} results:`
           : 'Select a genre to begin'}
@@ -269,7 +270,7 @@ const GenreSearch = () => {
         })}
      
     
-      </div>
+      </div> */}
     </div>
 
 );
