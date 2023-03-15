@@ -192,9 +192,9 @@ const GenreSearch = () => {
     
     try {
 
-    const response = await fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
+    // const response = await fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=2&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
 
-    // const response = await searchByGenre(selectedGenreCode);
+    const response = await searchByGenre(selectedGenreCode);
 
     console.log(searchByGenre(selectedGenreCode));
 
@@ -234,6 +234,7 @@ const GenreSearch = () => {
         autoComplete='off'
       >
         <div>
+          <h3>Genre Search</h3>
           <TextField
             id='genre-select'
             select
@@ -255,7 +256,9 @@ const GenreSearch = () => {
       <div>
         {genreSearchResults.map((result) => (
           <div key = {result.id}>
-              <span>{(`${result.title}`)}</span>
+              <p>{(`${result.title}`)}</p>
+              <p>{(`${result.type}`)}</p>
+              <p>{(`${result.year}`)}</p>
           </div>
         ))}
       </div>

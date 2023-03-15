@@ -14,8 +14,12 @@ const SearchPage = () => {
     <>
     <Header/>
     <div>Search Page
-      <GenreSearch></GenreSearch>
-      <TitleSearch></TitleSearch>
+      <div>
+        <GenreSearch />
+      </div>
+      <div>
+        <TitleSearch/>
+      </div>
     </div>
     <Footer/>
     </>

@@ -12,8 +12,7 @@ export const fetchGenres = () => {
   }
 
 // fetch titles by genre
-export const searchByGenre = (query) => {
-  return fetch(`https://api.watchmode.com/v1/list-titles?genres=${query}&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp`);
+export const searchByGenre = (query) => { return fetch(`https://api.watchmode.com/v1/list-titles?genres=${query}&limit=2&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp`);
 }
 
 // Action
