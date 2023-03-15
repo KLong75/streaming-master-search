@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { Box, TextField, MenuItem } from '@mui/material';
 
+import { searchByGenre } from '../../utils/apiCalls';
+
 const genreOptions = [
   {
     value: '1',
@@ -160,21 +162,26 @@ const GenreSearch = () => {
   //   console.log(event.target.value);
   //   const selectedGenreCode = event.target.value;
     
-  //   fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
+  //   fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=2&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
 
   //   .then((response) => response.json())
   //   .then((data) => {
-  //     console.log(data)
+  //     // console.log(data)
+  //     console.log(selectedGenre)
   //     const titleData = data;
   //     console.log(titleData)
   //     console.log(titleData.titles[0].title)
   //     setGenreSearchResults(titleData)
   //     setSelectedGenre('');
+  //     // first api fetch genreSearchResults is empty
+  //     // send api fetch genreSearchResults is set equal to previous search results
+  //     console.log(genreSearchResults);
   //   })
   //   .catch((err) => {
   //     console.log(err.message);
   //   });
-  // }
+  //   console.log();
+  // };
 
 
   const handleChange = async (event) => {
@@ -187,17 +194,23 @@ const GenreSearch = () => {
 
     const response = await fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=10&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
 
+    // const response = await searchByGenre(selectedGenreCode);
+
+    console.log(searchByGenre(selectedGenreCode));
+
     if (!response.ok) {
       throw new Error('Something went wrong')
     }
 
-    const { items } = await response.json();
+    const { titles } = await response.json();
+
+    console.log(titles)
     
-    const titleData = items.map((title) => ({
-      id: title.id,
-      title: title.titleInfo.title,
-      type: title.titleInfo.type,
-      year: title.titleInfo.year
+    const titleData = titles.map((titles) => ({
+      id: titles.id,
+      title: titles.title,
+      type: titles.type,
+      year: titles.year
     }));
 
     console.log(titleData);
@@ -208,11 +221,6 @@ const GenreSearch = () => {
     console.error(err);
   }
 };
-
-  
-
-  
-
 
 
   return (
@@ -243,36 +251,16 @@ const GenreSearch = () => {
           </TextField> 
         </div>
       </Box>
-
-
-
-
-
-
-
-
+        
       <div>
-        {genreSearchResults.length
-          ? `Viewing ${genreSearchResults.length} results:`
-          : 'Select a genre to begin'}
-
-        {genreSearchResults.map((title) => {
-          return (
-            <div key = {title.id}>
-              {title.title}
-              {title.type}
-              {title.year}
-
-
-            </div>
-          )
-        })}
-     
-    
+        {genreSearchResults.map((result) => (
+          <div key = {result.id}>
+              <span>{(`${result.title}`)}</span>
+          </div>
+        ))}
       </div>
     </div>
-
-);
+  );
 };
   
 export default GenreSearch;
