@@ -1,3 +1,4 @@
+import { List, ListItem } from "@mui/material";
 import React from "react";
 import { Link } from 'react-router-dom';
 
@@ -5,14 +6,17 @@ const Nav= () => {
   
   return (
     <nav>
-      <ul>
-        <Link to='/'><li>Landing Page / Title</li></Link>
-        <Link to='/home_page'> <li>Home</li></Link>
-        <Link to='/login'><li>Login</li></Link>
-        <Link to='/signup'><li>Sign Up</li></Link>
-        <Link to='/search'><li>Search</li></Link>
-        <a href='/'><li>Sign Out</li></a>
-      </ul>
+      <List sx={{
+        display: 'flex',
+        justifyContent: 'space-around',
+      }}>
+        <ListItem><Link to='/'>Landing Page / Title</Link></ListItem>
+        <ListItem><Link to='/home_page'>Home</Link></ListItem>
+        <ListItem><Link to='/login'>Login</Link></ListItem>
+        <ListItem><Link to='/signup'>Sign Up</Link></ListItem>
+        <ListItem><Link to='/search'>Search</Link></ListItem>
+        <ListItem><a href='/'>Sign Out</a></ListItem>
+      </List>
     </nav> 
   );
 };
