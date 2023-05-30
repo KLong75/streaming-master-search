@@ -9,11 +9,18 @@ import SearchResults from './pages/SearchResults';
 import SignUp from './pages/SignUp';
 import TitleDetails from './pages/TitleDetails';
 
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+
 
 const App = () => {
+
+
   return (
+    <>
     <Router>
-    <div className="App">
+    <Header/>
       <Routes>
         <Route
           path='/'
@@ -44,8 +51,9 @@ const App = () => {
           element={<TitleDetails />}
         />
       </Routes>
-    </div>
+      <Footer/>
     </Router>
+    </>
   );
 }
 

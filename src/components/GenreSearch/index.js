@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import { Box, TextField, MenuItem } from '@mui/material';
+import { Box, TextField, MenuItem, } from '@mui/material';
+import Button from '@mui/material/Button';
 
-import { searchByGenre } from '../../utils/apiCalls';
+import { searchByGenre, fetchTitleDetails } from '../../utils/apiCalls';
 
 const genreOptions = [
   {
@@ -157,6 +158,10 @@ const GenreSearch = () => {
 
   const [selectedGenre, setSelectedGenre] = useState('');
 
+  const [selectedTitle, setSelectedTitle] = useState('');
+
+  const [selectedTitleDetails, setSelectedTitleDetails] = useState({});
+
   // const handleChange = (event) => {
   //   setSelectedGenre(event.target.value);
   //   console.log(event.target.value);
@@ -217,10 +222,73 @@ const GenreSearch = () => {
 
     setGenreSearchResults(titleData);
     setSelectedGenre('');
+    window.location.href = '/search_results?titles=' + encodeURIComponent(JSON.stringify(titleData));
   } catch (err) {
     console.error(err);
   }
 };
+
+
+
+const handleTitleSelected = async (event) => {
+  event.preventDefault();
+  setSelectedTitle(event.target.value);
+  console.log(event.target.value);
+  const selectedTitleId = event.target.value;
+  console.log(selectedTitle)
+  
+  try {
+
+  // const response = await fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=2&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
+
+  const response = await fetchTitleDetails(selectedTitleId);
+
+  console.log(fetchTitleDetails(selectedTitleId));
+
+  if (!response.ok) {
+    throw new Error('Something went wrong')
+  }
+
+  const  titleDetails  = await response.json();
+
+  console.log(titleDetails)
+
+  const titleDetailsData = {
+    id: titleDetails.id,
+    title: titleDetails.title,
+    type: titleDetails.type,
+    year: titleDetails.year,
+    backdrop: titleDetails.backdrop,
+    critic_score: titleDetails.critic_score,
+    genre_names: titleDetails.genre_names,
+    network_names: titleDetails.network_names,
+    plot_overview: titleDetails.plot_overview,
+    poster: titleDetails.poster,
+    release_date: titleDetails.release_date,
+    runtime: titleDetails.runtime,
+    similar_titles: titleDetails.similar_titles,
+    sources: titleDetails.sources,
+    trailer: titleDetails.trailer,
+    trailer_thumbnail: titleDetails.trailer_thumbnail,
+    us_rating: titleDetails.us_rating,
+    user_rating: titleDetails.user_rating,
+  }
+  
+  
+  console.log(titleDetailsData);
+
+  setSelectedTitleDetails(titleDetailsData);
+  setSelectedTitle('');
+  // window.location.href = '/title_details';
+  window.location.href = '/title_details?titleDetails=' + encodeURIComponent(JSON.stringify(titleDetailsData));
+
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
 
 
   return (
@@ -256,11 +324,33 @@ const GenreSearch = () => {
       <div>
         {genreSearchResults.map((result) => (
           <div key = {result.id}>
-              <p>{(`${result.title}`)}</p>
-              <p>{(`${result.type}`)}</p>
-              <p>{(`${result.year}`)}</p>
+            <p>{(`${result.title}`)}</p>
+            <p>{(`${result.type}`)}</p>
+            <p>{(`${result.year}`)}</p>
+            <Button value={result.id} onClick={handleTitleSelected}>Select Title</Button>
           </div>
         ))}
+      </div>
+
+      <div>
+        <h3>Selected Title</h3>
+        <p>{selectedTitleDetails.title}</p>
+        <p>{selectedTitleDetails.type}</p>
+        <p>{selectedTitleDetails.year}</p>
+        <p>{selectedTitleDetails.backdrop}</p>
+        <p>{selectedTitleDetails.critic_score}</p>
+        <p>{selectedTitleDetails.genre_names}</p>
+        <p>{selectedTitleDetails.network_names}</p>
+        <p>{selectedTitleDetails.plot_overview}</p>
+        <p>{selectedTitleDetails.poster}</p>
+        <p>{selectedTitleDetails.release_date}</p>
+        <p>{selectedTitleDetails.runtime}</p>
+        <p>{selectedTitleDetails.similar_titles}</p>
+        {/* <p>{selectedTitleDetails.sources}</p> */}
+        <p>{selectedTitleDetails.trailer}</p>
+        <p>{selectedTitleDetails.trailer_thumbnail}</p>
+        <p>{selectedTitleDetails.us_rating}</p>
+        <p>{selectedTitleDetails.user_rating}</p>
       </div>
     </div>
   );
