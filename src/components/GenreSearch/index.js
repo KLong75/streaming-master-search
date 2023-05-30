@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import { Box, TextField, MenuItem, } from '@mui/material';
-import Button from '@mui/material/Button';
 
-import { searchByGenre, fetchTitleDetails } from '../../utils/apiCalls';
+
+import { searchByGenre } from '../../utils/apiCalls';
 
 const genreOptions = [
   {
@@ -154,13 +154,14 @@ const genreOptions = [
 
 const GenreSearch = () => {
 
+  // eslint-disable-next-line no-unused-vars
   const [genreSearchResults, setGenreSearchResults] = useState([]);
 
   const [selectedGenre, setSelectedGenre] = useState('');
 
-  const [selectedTitle, setSelectedTitle] = useState('');
+  // const [selectedTitle, setSelectedTitle] = useState('');
 
-  const [selectedTitleDetails, setSelectedTitleDetails] = useState({});
+  // const [selectedTitleDetails, setSelectedTitleDetails] = useState({});
 
   // const handleChange = (event) => {
   //   setSelectedGenre(event.target.value);
@@ -230,63 +231,64 @@ const GenreSearch = () => {
 
 
 
-const handleTitleSelected = async (event) => {
-  event.preventDefault();
-  setSelectedTitle(event.target.value);
-  console.log(event.target.value);
-  const selectedTitleId = event.target.value;
-  console.log(selectedTitle)
+// const handleTitleSelected = async (event) => {
+//   event.preventDefault();
+//   setSelectedTitle(event.target.value);
+//   console.log(event.target.value);
+//   const selectedTitleId = event.target.value;
+//   console.log(selectedTitle)
   
-  try {
+//   try {
 
   // const response = await fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=2&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
 
-  const response = await fetchTitleDetails(selectedTitleId);
+//   const response = await fetchTitleDetails(selectedTitleId);
 
-  console.log(fetchTitleDetails(selectedTitleId));
+//   console.log(fetchTitleDetails(selectedTitleId));
 
-  if (!response.ok) {
-    throw new Error('Something went wrong')
-  }
+//   if (!response.ok) {
+//     throw new Error('Something went wrong')
+//   }
 
-  const  titleDetails  = await response.json();
+//   const  titleDetails  = await response.json();
 
-  console.log(titleDetails)
+//   console.log(titleDetails)
 
-  const titleDetailsData = {
-    id: titleDetails.id,
-    title: titleDetails.title,
-    type: titleDetails.type,
-    year: titleDetails.year,
-    backdrop: titleDetails.backdrop,
-    critic_score: titleDetails.critic_score,
-    genre_names: titleDetails.genre_names,
-    network_names: titleDetails.network_names,
-    plot_overview: titleDetails.plot_overview,
-    poster: titleDetails.poster,
-    release_date: titleDetails.release_date,
-    runtime: titleDetails.runtime,
-    similar_titles: titleDetails.similar_titles,
-    sources: titleDetails.sources,
-    trailer: titleDetails.trailer,
-    trailer_thumbnail: titleDetails.trailer_thumbnail,
-    us_rating: titleDetails.us_rating,
-    user_rating: titleDetails.user_rating,
-  }
+//   const titleDetailsData = {
+//     id: titleDetails.id,
+//     title: titleDetails.title,
+//     type: titleDetails.type,
+//     year: titleDetails.year,
+//     backdrop: titleDetails.backdrop,
+//     critic_score: titleDetails.critic_score,
+//     genre_names: titleDetails.genre_names,
+//     network_names: titleDetails.network_names,
+//     plot_overview: titleDetails.plot_overview,
+//     poster: titleDetails.poster,
+//     release_date: titleDetails.release_date,
+//     runtime: titleDetails.runtime,
+//     similar_titles: titleDetails.similar_titles,
+//     sources: titleDetails.sources,
+//     trailer: titleDetails.trailer,
+//     trailer_thumbnail: titleDetails.trailer_thumbnail,
+//     us_rating: titleDetails.us_rating,
+//     user_rating: titleDetails.user_rating,
+//     imdb_id: titleDetails.imdb_id,
+//   }
   
   
-  console.log(titleDetailsData);
+//   console.log(titleDetailsData);
 
-  setSelectedTitleDetails(titleDetailsData);
-  setSelectedTitle('');
-  // window.location.href = '/title_details';
-  window.location.href = '/title_details?titleDetails=' + encodeURIComponent(JSON.stringify(titleDetailsData));
+//   setSelectedTitleDetails(titleDetailsData);
+//   setSelectedTitle('');
+//   // window.location.href = '/title_details';
+//   // window.location.href = '/title_details?titleDetails=' + encodeURIComponent(JSON.stringify(titleDetailsData));
 
 
-  } catch (err) {
-    console.error(err);
-  }
-};
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
 
 
 
@@ -321,7 +323,7 @@ const handleTitleSelected = async (event) => {
         </div>
       </Box>
         
-      <div>
+      {/* <div>
         {genreSearchResults.map((result) => (
           <div key = {result.id}>
             <p>{(`${result.title}`)}</p>
@@ -346,12 +348,12 @@ const handleTitleSelected = async (event) => {
         <p>{selectedTitleDetails.release_date}</p>
         <p>{selectedTitleDetails.runtime}</p>
         <p>{selectedTitleDetails.similar_titles}</p>
-        {/* <p>{selectedTitleDetails.sources}</p> */}
+        <p>{selectedTitleDetails.sources}</p>
         <p>{selectedTitleDetails.trailer}</p>
         <p>{selectedTitleDetails.trailer_thumbnail}</p>
         <p>{selectedTitleDetails.us_rating}</p>
         <p>{selectedTitleDetails.user_rating}</p>
-      </div>
+      </div> */}
     </div>
   );
 };

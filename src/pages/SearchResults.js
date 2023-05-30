@@ -73,6 +73,7 @@ const SearchResults = () => {
       trailer_thumbnail: titleDetails.trailer_thumbnail,
       us_rating: titleDetails.us_rating,
       user_rating: titleDetails.user_rating,
+      imdb_id: titleDetails.imdb_id,
     }
     
     
