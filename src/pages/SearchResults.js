@@ -81,7 +81,7 @@ const SearchResults = () => {
   
     setSelectedTitleDetails(titleDetailsData);
     setSelectedTitle('');
-    // window.location.href = '/title_details';
+    window.location.href = '/title_details';
     window.location.href = '/title_details?titleDetails=' + encodeURIComponent(JSON.stringify(titleDetailsData));
   
   

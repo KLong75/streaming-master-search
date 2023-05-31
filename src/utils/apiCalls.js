@@ -9,7 +9,24 @@ export const fetchGenres = () => {
     .catch((err) => {
       console.log(err.message);
     });
-  }
+}
+
+// fetch sources
+export const fetchSources = () => {
+    fetch('https://api.watchmode.com/v1/sources/?apiKey=WIu3mU2xnsXe9BTf7WlTqfAmFnw3uwR5kTG1RtbB')
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      const subSources = data.filter((source => source.type === 'sub'))
+      console.log(subSources)
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+    
+}
+
+
 
 // fetch titles by genre
 // export const searchByGenre = (query) => { return fetch(`https://api.watchmode.com/v1/list-titles?genres=${query}&limit=2&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp`);
