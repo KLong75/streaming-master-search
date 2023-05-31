@@ -302,8 +302,6 @@ const TitleDetails = () => {
       </Button>
     )}
 
-    
-
     {/* Apple TV button */}
     {appleTvUrl && (
         <Button variant="contained" color="primary" href={appleTvUrl} target="_blank" rel="noopener noreferrer">
