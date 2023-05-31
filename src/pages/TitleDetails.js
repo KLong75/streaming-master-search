@@ -47,9 +47,7 @@ const TitleDetails = () => {
       const amazonPrime = sources.filter(source => source.source_id === 26);
       const max = sources.filter(source => source.source_id === 387);
       const disneyPlus = sources.filter(source => source.source_id === 372);
-      const peacock = sources.filter(source => source.source_id === 388);
-
-      
+      // const peacock = sources.filter(source => source.source_id === 388);
 
       if (appleTv.length >= 1) {
         const appleTvUrl = appleTv[0].web_url;
