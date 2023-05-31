@@ -12,7 +12,21 @@ const TitleDetails = () => {
 
   const [similarTitlesDetails, setSimilarTitlesDetails] = useState([]);
 
-  // const [similarTitlesDetails, setSimilarTitlesDetails] = useState([]);
+  const [appleTvUrl, setAppleTvUrl] = useState('');
+
+  const [netflixUrl, setNetflixUrl] = useState('');
+
+  const [huluUrl, setHuluUrl] = useState('');
+
+  const [amazonPrimeUrl, setAmazonPrimeUrl] = useState('');
+
+  const [maxUrl, setMaxUrl] = useState('');
+
+  const [disneyPlusUrl, setDisneyPlusUrl] = useState('');
+
+  // const [peacockUrl, setPeacockUrl] = useState('');
+
+
 
   useEffect(() => {
     const queryString = window.location.search;
@@ -22,6 +36,54 @@ const TitleDetails = () => {
     if (titleDetailsParam) {
       const parsedTitleDetails = JSON.parse(decodeURIComponent(titleDetailsParam));
       setSelectedTitleDetails(parsedTitleDetails);
+
+
+      const sources = parsedTitleDetails.sources || [];
+      console.log(sources)
+      const appleTv = sources.filter(source => source.source_id === 371);
+      console.log(appleTv)
+      const netflix = sources.filter(source => source.source_id === 203);
+      const hulu = sources.filter(source => source.source_id === 157);
+      const amazonPrime = sources.filter(source => source.source_id === 26);
+      const max = sources.filter(source => source.source_id === 387);
+      const disneyPlus = sources.filter(source => source.source_id === 372);
+      const peacock = sources.filter(source => source.source_id === 388);
+
+      
+
+      if (appleTv.length >= 1) {
+        const appleTvUrl = appleTv[0].web_url;
+        setAppleTvUrl(appleTvUrl);
+        console.log(appleTvUrl)
+      }
+      if (netflix.length >= 1) {
+        const netflixUrl = netflix[0].web_url;
+        setNetflixUrl(netflixUrl);
+      }
+      if (hulu.length >= 1) {
+        const huluUrl = hulu[0].web_url;
+        setHuluUrl(huluUrl);
+      }
+      if (amazonPrime.length >= 1) {
+        const amazonPrimeUrl = amazonPrime[0].web_url;
+        setAmazonPrimeUrl(amazonPrimeUrl);
+      }
+      if (max.length >= 1) {
+        const maxUrl = max[0].web_url;
+        setMaxUrl(maxUrl);
+      }
+      if (disneyPlus.length >= 1) {
+        const disneyPlusUrl = disneyPlus[0].web_url;
+        setDisneyPlusUrl(disneyPlusUrl);
+      }
+      // if (peacock.length >= 1) {
+      //   const peacockUrl = peacock[0].web_url;
+      //   setPeacockUrl(peacockUrl);
+      // }
+
+    
+
+
     }
   }, []);
 
@@ -84,46 +146,6 @@ const TitleDetails = () => {
 
   useEffect(() => {
 
-    // const getSimilarTitleOne = async () => {
-
-    //   if (!selectedTitleDetails.similar_titles || selectedTitleDetails.similar_titles.length === 0) {
-    //     return; // Don't proceed if there are no similar titles
-    //   }
-
-
-    //   console.log( selectedTitleDetails )
-    //   const similarTitleOneId = selectedTitleDetails.similar_titles[0];
-    //   console.log(similarTitleOneId);
-
-    //   try {
-      
-    //     const response = await fetchTitleDetails(similarTitleOneId);
-      
-      
-    //     if (!response.ok) {
-    //       throw new Error('Something went wrong')
-    //     }
-      
-    //     const  similarTitleOneData  = await response.json();
-
-    //     console.log(similarTitleOneData)
-
-    //     const similarTitleOneDetails = {
-    //       id: similarTitleOneData.id,
-    //       title: similarTitleOneData.title,
-    //       type: similarTitleOneData.type,
-    //       poster: similarTitleOneData.poster,
-    //       trailer: similarTitleOneData.trailer,
-    //     }
-
-    //     console.log(similarTitleOneDetails)
-
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // };
-    // getSimilarTitleOne();
-
     const getSimilarTitles = async () => {
       if (!selectedTitleDetails.similar_titles || selectedTitleDetails.similar_titles.length === 0) {
         return; // Don't proceed if there are no similar titles
@@ -164,10 +186,7 @@ const TitleDetails = () => {
     
     getSimilarTitles();
     
-
-
     }, [selectedTitleDetails]);
-
 
     const handleTitleSelected = async (event) => {
       event.preventDefault();
@@ -207,6 +226,7 @@ const TitleDetails = () => {
         runtime: titleDetails.runtime,
         similar_titles: titleDetails.similar_titles,
         sources: titleDetails.sources,
+        
         trailer: titleDetails.trailer,
         trailer_thumbnail: titleDetails.trailer_thumbnail,
         us_rating: titleDetails.us_rating,
@@ -245,9 +265,53 @@ const TitleDetails = () => {
     <img src={selectedTitleDetails.poster} alt='show poster'/>
     <p>Release Date: {selectedTitleDetails.release_date}</p>
     <p>Runtime: {selectedTitleDetails.runtime}</p>
+    <p>Streaming Sources:</p>
+
+    {/* Netflix button */}
+    {netflixUrl && (
+        <Button variant="contained" color="primary" href={netflixUrl} target="_blank" rel="noopener noreferrer">
+          Watch on Netflix
+        </Button>
+    )}
+
+    {/* Amazon Prime button */}
+    {amazonPrimeUrl && (
+        <Button variant="contained" color="primary" href={amazonPrimeUrl} target="_blank" rel="noopener noreferrer">
+          Watch on Amazon Prime
+        </Button>
+    )}
+
+    {/* Hulu button */}
+    {huluUrl && (
+      <Button variant="contained" color="primary" href={huluUrl} target="_blank" rel="noopener noreferrer">
+        Watch on Hulu
+      </Button>
+    )}
+
+    {/* Max button */}
+    {maxUrl && (
+      <Button variant="contained" color="primary" href={maxUrl} target="_blank" rel="noopener noreferrer">
+        Watch on Max
+      </Button>
+    )}
+
+    {/* Disney Plus button */}
+    {disneyPlusUrl && (
+      <Button variant="contained" color="primary" href={disneyPlusUrl} target="_blank" rel="noopener noreferrer">
+        Watch on Disney Plus
+      </Button>
+    )}
+
     
-   
-    {/* <p>{selectedTitleDetails.sources}</p> */}
+
+    {/* Apple TV button */}
+    {appleTvUrl && (
+        <Button variant="contained" color="primary" href={appleTvUrl} target="_blank" rel="noopener noreferrer">
+          Watch on Apple TV
+        </Button>
+    )}
+
+    <p>Trailer:</p>
     <a href={selectedTitleDetails.trailer} target='_blank' rel='noreferrer'><img src={selectedTitleDetails.trailer_thumbnail} alt='trailer thumbnail'/></a>
     
     <p>Rating:{selectedTitleDetails.us_rating}</p>
