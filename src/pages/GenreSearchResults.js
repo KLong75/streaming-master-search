@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 
 import { fetchTitleDetails } from '../utils/apiCalls';
 
-const SearchResults = () => {
+const GenreSearchResults = () => {
 
   const [genreSearchResults, setGenreSearchResults] = useState([]);
 
@@ -34,6 +34,7 @@ const SearchResults = () => {
   const handleTitleSelected = async (event) => {
     event.preventDefault();
     setSelectedTitle(event.target.value);
+    console.log(setSelectedTitle);
     console.log(event.target.value);
     const selectedTitleId = event.target.value;
     console.log(selectedTitle)
@@ -81,7 +82,7 @@ const SearchResults = () => {
   
     setSelectedTitleDetails(titleDetailsData);
     setSelectedTitle('');
-    window.location.href = '/title_details';
+    // window.location.href = '/title_details';
     window.location.href = '/title_details?titleDetails=' + encodeURIComponent(JSON.stringify(titleDetailsData));
   
   
@@ -110,4 +111,4 @@ const SearchResults = () => {
   
 };
 
-export default SearchResults;
+export default GenreSearchResults;

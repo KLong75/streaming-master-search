@@ -4,6 +4,7 @@ import React from 'react';
 
 import GenreSearch from '../components/GenreSearch';
 import TitleSearch from '../components/TitleSearch';
+import ActorSearch from '../components/ActorSearch';
 import SavedTitleList from '../components/SavedTitleList';
 
 const HomePage = () => {
@@ -14,6 +15,7 @@ const HomePage = () => {
     <div>Home Page
       <GenreSearch/>
       <TitleSearch/>
+      <ActorSearch/>
       <SavedTitleList/>
     </div>
     

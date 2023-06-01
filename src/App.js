@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Search from './pages/SearchPage';
-import SearchResults from './pages/SearchResults';
+import GenreSearchResults from './pages/GenreSearchResults';
 import TitleSearchResults from './pages/TitleSearchResults';
 import ActorSearchResults from './pages/ActorSearchResults';
 import SignUp from './pages/SignUp';
@@ -46,7 +46,7 @@ const App = () => {
         />
         <Route
           path='/search_results'
-          element={<SearchResults />}
+          element={<GenreSearchResults />}
         />
         <Route
           path='/title_search_results'

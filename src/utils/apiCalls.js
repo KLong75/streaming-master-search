@@ -46,6 +46,9 @@ export const searchByTitle = (query) => { return fetch(`https://api.watchmode.co
 export const searchByName = (query) => { return fetch(`https://api.themoviedb.org/3/search/person?query=${query}&api_key=9800abc2c4bf02eb04e906d6de333800&include_adult=false&language=en-US&page=1`);
 }
 
+export const searchTitlesByImdbId = (query) => { return fetch(`https://api.watchmode.com/v1/title/${query}/details?apiKey=WIu3mU2xnsXe9BTf7WlTqfAmFnw3uwR5kTG1RtbB&append_to_response=sources`);
+}
+
 
 
 // fetch details by title id
@@ -73,6 +76,17 @@ export const fetchTopMoviesPageTwo = () => { return fetch ('https://api.themovie
 export const fetchTopPeoplePageOne = () => { return fetch ('https://api.themoviedb.org/3/person/popular?api_key=9800abc2c4bf02eb04e906d6de333800&language=en-US&page=1');
 }
 
+export const fetchTopPeoplePageTwo = () => { return fetch ('https://api.themoviedb.org/3/person/popular?api_key=9800abc2c4bf02eb04e906d6de333800&language=en-US&page=2');
+}
+
+export const fetchTopPeoplePageThree = () => { return fetch ('https://api.themoviedb.org/3/person/popular?api_key=9800abc2c4bf02eb04e906d6de333800&language=en-US&page=3');
+}
+
+export const fetchTopPeoplePageFour = () => { return fetch ('https://api.themoviedb.org/3/person/popular?api_key=9800abc2c4bf02eb04e906d6de333800&language=en-US&page=4');
+}
+
+export const fetchTopPeoplePageFive = () => { return fetch ('https://api.themoviedb.org/3/person/popular?api_key=9800abc2c4bf02eb04e906d6de333800&language=en-US&page=5');
+}
 
 
 

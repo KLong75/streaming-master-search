@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
@@ -6,39 +6,16 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 // import FormLabel from '@mui/material/FormLabel';
 
-import { searchByName, fetchTopPeoplePageOne } from "../../utils/apiCalls";
+import { searchByName, fetchTopPeoplePageOne, fetchTopPeoplePageTwo } from "../../utils/apiCalls";
 
 const filter = createFilterOptions();
 
-const topActors = [];
 
-const topPeopleNamesPageOne = async () => {
-    try {
-      const response = await fetchTopPeoplePageOne();
-      const data = await response.json();
-      console.log(data);
-      // add data to topActors array
-      data.results.forEach((person) => {
+const ActorSearch = () => {
   
-        // topMovieTitles.push(movie.title);
-        topActors.push({name: person.name, id: person.id});
-      });
-      console.log(topActors);
-      return data;
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
+  const [topActors, setTopActors] = useState([]);
 
-topPeopleNamesPageOne();
-
-const PersonSearch = () => {
   const [searchTerm, setSearchTerm] = useState(null);
-
-  // const [searchResults, setSearchResults] = useState([]);
-
-  // const [selectedPerson, setSelectedPerson] = useState('');
 
   const searchByEnteredName = async (event) => {
     event.preventDefault();
@@ -75,11 +52,62 @@ const PersonSearch = () => {
   }
 };
 
+useEffect(() => {
+  console.log("ActorSearch rendered", Date.now());
+  const fetchData = async () => {
+    await topPeopleNamesPageOne();
+    await topPeopleNamesPageTwo();
+  };
+
+  fetchData();
+}, []);
+
+  const topPeopleNamesPageOne = async () => {
+    try {
+      const response = await fetchTopPeoplePageOne();
+      const data = await response.json();
+      console.log(data);
+    
+      const actors = data.results.map((person) => ({
+        name: person.name,
+        id: person.id
+      }));
+
+      setTopActors(actors);
+      // console.log(actors);
+      // return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const topPeopleNamesPageTwo = async () => {
+    try {
+      const response = await fetchTopPeoplePageTwo();
+      const data = await response.json();
+      console.log(data);
+
+      const newActors = data.results.map((person) => ({
+        name: person.name,
+        id: person.id
+      }));
+
+      setTopActors((prevActors) => [...prevActors, ...newActors]);
+      // console.log(topActors);
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log(topActors);
+  };
+
+  useEffect(() => {
+    console.log(topActors);
+  }, [topActors]);
 
 
 return (
   <div>
-    <h3>Search by Actor Name</h3>
+    <h3>Actor Search</h3>
     <form onSubmit={searchByEnteredName}>
       <FormControl >
       <Autocomplete
@@ -138,11 +166,11 @@ return (
           <TextField {...params} label="Enter Actor Name" />
         )}
       />
-        <Button type='submit' style= {{width: '60%'}} variant='contained'>Search By Title</Button>
+        <Button type='submit' style= {{width: '60%'}} variant='contained'>Search By Actor</Button>
       </FormControl>
       </form>
   </div>
 )
 };
   
-export default PersonSearch;
+export default ActorSearch;

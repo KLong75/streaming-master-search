@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMoreTitleDetailsMovie, fetchTitleDetails } from '../utils/apiCalls';
+import { searchTitlesByImdbId, fetchTitleDetails } from '../utils/apiCalls';
 
 import Button from '@mui/material/Button';
 
@@ -36,7 +36,7 @@ const ActorSearchResults = () => {
     
     try {
   
-    const response = await fetchTitleDetails(selectedTitleId);
+    const response = await searchTitlesByImdbId(selectedTitleId);
   
     console.log(fetchTitleDetails(selectedTitleId));
   
@@ -74,8 +74,8 @@ const ActorSearchResults = () => {
     console.log(titleDetailsData);
   
     setSelectedTitleDetails(titleDetailsData);
-    setSelectedTitle('');
-    window.location.href = '/title_details';
+    // setSelectedTitle('');
+    
     window.location.href = '/title_details?titleDetails=' + encodeURIComponent(JSON.stringify(titleDetailsData));
   
   
@@ -98,14 +98,10 @@ const ActorSearchResults = () => {
             <div key={knownForItem.id}>
               <p>{knownForItem.title}</p>
               <img src={'https://image.tmdb.org/t/p/w200/' + knownForItem.poster_path} alt={knownForItem.title} />
-              <Button variant='contained' value={knownForItem.id} onClick={handleTitleSelected}>More Details</Button>
-              
+              <Button variant='contained' value={knownForItem.media_type + '-' + knownForItem.id} onClick={handleTitleSelected}>More Details</Button>
+
             </div>
           ))}
-
-            {/* <p>{(`${result.known_for[0].title}`)}</p>
-            <img src={'https://image.tmdb.org/t/p/w200/' + result.known_for[0].poster_path} alt={result.known_for[0].title} />
-            <Button value={result.known_for[0].title} onClick={handleTitleSelected}>More Details</Button> */}
           </div>
         ))}
       </div>

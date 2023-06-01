@@ -4,12 +4,12 @@ import React from 'react';
 
 import GenreSearch from '../components/GenreSearch';
 import TitleSearch from '../components/TitleSearch';
-import PersonSearch from '../components/PersonSearch';
+import ActorSearch from '../components/ActorSearch';
 
 
 
 const SearchPage = () => {
-
+console.log("SearchPage rendered")
   return (
     <>
     
@@ -21,7 +21,7 @@ const SearchPage = () => {
         <TitleSearch/>
       </div>
       <div>
-        <PersonSearch/>
+        <ActorSearch/>
       </div>
     </div>
    
