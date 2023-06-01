@@ -6,6 +6,8 @@ import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Search from './pages/SearchPage';
 import SearchResults from './pages/SearchResults';
+import TitleSearchResults from './pages/TitleSearchResults';
+import ActorSearchResults from './pages/ActorSearchResults';
 import SignUp from './pages/SignUp';
 import TitleDetails from './pages/TitleDetails';
 
@@ -45,6 +47,14 @@ const App = () => {
         <Route
           path='/search_results'
           element={<SearchResults />}
+        />
+        <Route
+          path='/title_search_results'
+          element={<TitleSearchResults />}
+        />
+        <Route
+          path='/actor_search_results'
+          element={<ActorSearchResults />}
         />
         <Route
           path='/title_details'

@@ -36,6 +36,17 @@ export const searchByGenre = (query) => { return fetch(`https://api.watchmode.co
 }
 
 
+// fetch titles by title
+export const searchByTitle = (query) => { return fetch(`https://api.watchmode.com/v1/autocomplete-search/?apiKey=WIu3mU2xnsXe9BTf7WlTqfAmFnw3uwR5kTG1RtbB&search_value=${query}`);
+}
+
+// export const searchByName = (query) => { return fetch(`https://api.watchmode.com/v1/search/?apiKey=WIu3mU2xnsXe9BTf7WlTqfAmFnw3uwR5kTG1RtbB&search_field=name&search_value=${query}`);
+// }
+
+export const searchByName = (query) => { return fetch(`https://api.themoviedb.org/3/search/person?query=${query}&api_key=9800abc2c4bf02eb04e906d6de333800&include_adult=false&language=en-US&page=1`);
+}
+
+
 
 // fetch details by title id
 // export const fetchTitleDetails = (query) => { return fetch(`https://api.watchmode.com/v1/title/${query}/details/?append_to_response=sources&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp`);
@@ -50,6 +61,30 @@ export const fetchMoreTitleDetailsMovie = (query) => { return fetch(`https://api
 
 export const fetchMoreTitleDetailsTV = (query) => { return fetch(`https://api.themoviedb.org/3/tv/${query}/credits?api_key=9800abc2c4bf02eb04e906d6de333800&language=en-US`);
 } 
+
+// fetch top movies
+export const fetchTopMoviesPageOne = () => { return fetch ('https://api.themoviedb.org/3/movie/top_rated?api_key=9800abc2c4bf02eb04e906d6de333800&language=en-US&page=1');
+}
+
+export const fetchTopMoviesPageTwo = () => { return fetch ('https://api.themoviedb.org/3/movie/top_rated?api_key=9800abc2c4bf02eb04e906d6de333800&language=en-US&page=2');
+}
+
+// fetch top people
+export const fetchTopPeoplePageOne = () => { return fetch ('https://api.themoviedb.org/3/person/popular?api_key=9800abc2c4bf02eb04e906d6de333800&language=en-US&page=1');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

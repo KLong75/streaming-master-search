@@ -5,15 +5,15 @@ import Button from '@mui/material/Button';
 
 import { fetchTitleDetails } from '../utils/apiCalls';
 
-const SearchResults = () => {
 
-  const [genreSearchResults, setGenreSearchResults] = useState([]);
+
+const TitleSearchResults = () => {
+
+  const [titleSearchResults, setTitleSearchResults] = useState([]);
 
   const [selectedTitle, setSelectedTitle] = useState('');
 
   const [selectedTitleDetails, setSelectedTitleDetails] = useState({});
-
-  console.log(selectedTitleDetails)
 
 
   useEffect(() => {
@@ -23,11 +23,12 @@ const SearchResults = () => {
 
     if (titles) {
       const parsedTitles = JSON.parse(decodeURIComponent(titles));
-      setGenreSearchResults(parsedTitles);
+      setTitleSearchResults(parsedTitles);
     }
   }, []);
+  
+  console.log(titleSearchResults)
 
-  console.log(genreSearchResults)
 
 
 
@@ -91,23 +92,32 @@ const SearchResults = () => {
   };
 
 
+
+
+
+
   return (
     <>
-    <div>Genre Search Results Page</div>
+   
+    <h3>Title Search Results Page</h3>
+
     <div>
-        {genreSearchResults.map((result) => (
-          <div key = {result.id}>
-            <p>{(`${result.title}`)}</p>
-            <p>{(`${result.type}`)}</p>
-            <p>{(`${result.year}`)}</p>
-            <Button value={result.id} onClick={handleTitleSelected}>Select Title</Button>
-          </div>
-        ))}
-      </div>
-    
+      {titleSearchResults.map((result) => (
+        <div key = {result.id}>
+          <p>{(`${result.title}`)}</p>
+          <p>{(`${result.type}`)}</p>
+          <p>{(`${result.year}`)}</p>
+          <img src={result.image_url} alt={result.title} />
+          <Button variant='contained' value={result.id} onClick={handleTitleSelected} >
+            More Details
+          </Button>
+          <Button variant='contained' value={result.id}>Save To Watchlist</Button>
+        </div>
+      ))}
+    </div>
     </>
   )
   
 };
 
-export default SearchResults;
+export default TitleSearchResults;

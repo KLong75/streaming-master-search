@@ -1,7 +1,53 @@
 import React, {useState} from "react";
 
 import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import Button from '@mui/material/Button';
+// import FormLabel from '@mui/material/FormLabel';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+
+import { searchByTitle, fetchTopMoviesPageOne, fetchTopMoviesPageTwo } from "../../utils/apiCalls";
+
+// const topMovieTitles = [];
+
+// const getTopMovieTitlesPageOne = async () => {
+//   try {
+//     const response = await fetchTopMoviesPageOne();
+//     const data = await response.json();
+//     console.log(data);
+//     // add data to topMovieTitles array
+//     data.results.forEach((movie) => {
+
+//       // topMovieTitles.push(movie.title);
+//       topMovieTitles.push({title: movie.title, year: movie.release_date});
+//     });
+//     console.log(topMovieTitles);
+//     return data;
+//   }
+//   catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// const getTopMovieTitlesPageTwo = async () => {
+//   try {
+//     const response = await fetchTopMoviesPageTwo();
+//     const data = await response.json();
+//     console.log(data);
+//     // add data to topMovieTitles array
+//     data.results.forEach((movie) => {
+//       topMovieTitles.push({title: movie.title, year: movie.release_date});
+//     });
+//     console.log(topMovieTitles);
+//     return data;
+//   }
+//   catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// getTopMovieTitlesPageOne();
+// getTopMovieTitlesPageTwo();
 
 const filter = createFilterOptions();
 
@@ -137,82 +183,113 @@ const top100Films = [
 
 const TitleSearch = () => {
   const [value, setValue] = useState(null);
+
+  const searchByUserInput = async (event) => {
+    event.preventDefault();
+    console.log(value.title);
+    const userInput = value.title;
+
+    try {
+      const response = await searchByTitle(userInput);
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error('something went wrong!');
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      const titleSearchResults = data.results.map((titles) => ({
+        id: titles.id,
+        title: titles.name,
+        year: titles.year,
+        type: titles.type,
+        image_url: titles.image_url,
+      }));
+
+      console.log(titleSearchResults);
+
+      setValue('')
+      window.location.href = '/title_search_results?titles=' + encodeURIComponent(JSON.stringify(titleSearchResults));
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+ 
+
+
   return (
     <div>
       <h3>Title Search</h3>
-
+      <form onSubmit={searchByUserInput}>
+      <FormControl >
       <Autocomplete
-      value={value}
-      onChange={(event, newValue) => {
-        if (typeof newValue === 'string') {
-          setValue({
-            title: newValue,
-          });
-        } else if (newValue && newValue.inputValue) {
+        size="small"
+        value={value}
+        onChange={(event, newValue) => {
+          if (typeof newValue === 'string') {
+            setValue({
+              title: newValue,
+            });
+          } else if (newValue && newValue.inputValue) {
           // Create a new value from the user input
-          setValue({
-            title: newValue.inputValue,
-          });
-        } else {
-          setValue(newValue);
-        }
-      }}
-      filterOptions={(options, params) => {
-        const filtered = filter(options, params);
+            setValue({
+              title: newValue.inputValue,
+            });
+          } else {
+            setValue(newValue);
+          }
+        }}
+        filterOptions={(options, params) => {
+          const filtered = filter(options, params);
 
-        const { inputValue } = params;
-        // Suggest the creation of a new value
-        const isExisting = options.some((option) => inputValue === option.title);
-        if (inputValue !== '' && !isExisting) {
-          filtered.push({
-            inputValue,
-            title: `Add "${inputValue}"`,
-          });
-        }
-
-        return filtered;
-      }}
-      selectOnFocus
-      clearOnBlur
-      handleHomeEndKeys
-      id="free-solo-with-text-demo"
-      options={top100Films}
-      getOptionLabel={(option) => {
-        // Value selected with enter, right from the input
-        if (typeof option === 'string') {
-          return option;
-        }
-        // Add "xxx" option created dynamically
-        if (option.inputValue) {
-          return option.inputValue;
-        }
-        // Regular option
-        return option.title;
-      }}
-      renderOption={(props, option) => <li {...props}>{option.title}</li>}
-      sx={{ width: 300 }}
-      freeSolo
-      renderInput={(params) => (
-        <TextField {...params} label="Enter Title" />
-      )}
-    />
-  
-
-
-
-        
-
-
-
-
-
-
-        <button>Search By Title</button>
+          const { inputValue } = params;
+          // Suggest the creation of a new value
+          const isExisting = options.some((option) => inputValue === option.title);
+          if (inputValue !== '' && !isExisting) {
+            filtered.push({
+              inputValue,
+              title: `Add "${inputValue}"`,
+            });
+          }  
+          // console.log(filtered)
+          return filtered;
+        }}
+        selectOnFocus
+        clearOnBlur
+        handleHomeEndKeys
+        id=""
+        options={top100Films}
+        getOptionLabel={(option) => {
+          // Value selected with enter, right from the input
+          if (typeof option === 'string') {
+            return option;
+          }
+          // Add "xxx" option created dynamically
+          if (option.inputValue) {
+            return option.inputValue;
+          }
+          // Regular option
+          return option.title;
+        }}
+        renderOption={(props, option) => <li {...props}>{option.title}</li>}
+        sx={{ width: 300 }}
+        freeSolo
+        renderInput={(params) => (
+          <TextField {...params} label="Enter Title" />
+        )}
+      />
+        <Button type='submit' style= {{width: '60%'}} variant='contained'>Search By Title</Button>
+      </FormControl>
+      </form>
       </div>
-    );
-  };
+  );
+};
   
-  export default TitleSearch;
+export default TitleSearch;
 
 // import * as React from 'react';
 // import TextField from '@mui/material/TextField';

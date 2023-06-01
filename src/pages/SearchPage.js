@@ -4,6 +4,7 @@ import React from 'react';
 
 import GenreSearch from '../components/GenreSearch';
 import TitleSearch from '../components/TitleSearch';
+import PersonSearch from '../components/PersonSearch';
 
 
 
@@ -18,6 +19,9 @@ const SearchPage = () => {
       </div>
       <div>
         <TitleSearch/>
+      </div>
+      <div>
+        <PersonSearch/>
       </div>
     </div>
    

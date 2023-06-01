@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { fetchMoreTitleDetailsMovie, fetchTitleDetails } from '../utils/apiCalls';
 
 import Button from '@mui/material/Button';
 
-import { fetchTitleDetails } from '../utils/apiCalls';
 
-const SearchResults = () => {
-
-  const [genreSearchResults, setGenreSearchResults] = useState([]);
+const ActorSearchResults = () => {
+  const [actorSearchResults, setActorSearchResults] = useState([]);
 
   const [selectedTitle, setSelectedTitle] = useState('');
 
@@ -15,20 +13,18 @@ const SearchResults = () => {
 
   console.log(selectedTitleDetails)
 
-
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const titles = urlParams.get('titles');
+    const actors = urlParams.get('actors');
 
-    if (titles) {
-      const parsedTitles = JSON.parse(decodeURIComponent(titles));
-      setGenreSearchResults(parsedTitles);
+    if (actors) {
+      const parsedActors = JSON.parse(decodeURIComponent(actors));
+      setActorSearchResults(parsedActors);
     }
   }, []);
 
-  console.log(genreSearchResults)
-
+  console.log(actorSearchResults)
 
 
   const handleTitleSelected = async (event) => {
@@ -39,8 +35,6 @@ const SearchResults = () => {
     console.log(selectedTitle)
     
     try {
-  
-    // const response = await fetch('https://api.watchmode.com/v1/list-titles?genres=' + selectedGenreCode + '&limit=2&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp')
   
     const response = await fetchTitleDetails(selectedTitleId);
   
@@ -90,24 +84,33 @@ const SearchResults = () => {
     }
   };
 
-
   return (
     <>
-    <div>Genre Search Results Page</div>
-    <div>
-        {genreSearchResults.map((result) => (
+      <h3>Actor Search Results</h3>
+      <div className="search-results-container">
+        {actorSearchResults.map((result) => (
           <div key = {result.id}>
-            <p>{(`${result.title}`)}</p>
-            <p>{(`${result.type}`)}</p>
-            <p>{(`${result.year}`)}</p>
-            <Button value={result.id} onClick={handleTitleSelected}>Select Title</Button>
+            <p>{(`${result.name}`)}</p>
+            <img src={result.image_url} alt={result.name}/>
+
+            {/* Iterate through known_for array */}
+          {result.known_for.map((knownForItem) => (
+            <div key={knownForItem.id}>
+              <p>{knownForItem.title}</p>
+              <img src={'https://image.tmdb.org/t/p/w200/' + knownForItem.poster_path} alt={knownForItem.title} />
+              <Button variant='contained' value={knownForItem.id} onClick={handleTitleSelected}>More Details</Button>
+              
+            </div>
+          ))}
+
+            {/* <p>{(`${result.known_for[0].title}`)}</p>
+            <img src={'https://image.tmdb.org/t/p/w200/' + result.known_for[0].poster_path} alt={result.known_for[0].title} />
+            <Button value={result.known_for[0].title} onClick={handleTitleSelected}>More Details</Button> */}
           </div>
         ))}
       </div>
-    
     </>
   )
-  
 };
 
-export default SearchResults;
+export default ActorSearchResults;
