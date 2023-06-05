@@ -60,6 +60,10 @@ const TitleDetails = () => {
 
   const [youTubePremiumUrl, setYouTubePremiumUrl] = useState('');
 
+  const [showtimeAmazonPrimeUrl, setShowtimeAmazonPrimeUrl] = useState('');
+
+  const [cbsAllAccessUrl, setCbsAllAccessUrl] = useState('');
+
   const [notAvailable, setNotAvailable] = useState('');
 
 
@@ -102,6 +106,8 @@ const TitleDetails = () => {
       const kanopy = sources.filter(source => source.source_id === 367);
       const huluWithShowtime = sources.filter(source => source.source_id === 159);
       const youTubePremium = sources.filter(source => source.source_id === 368);
+      const showtimeAmazonPrime = sources.filter(source => source.source_id === 249);
+      const cbsAllAccess = sources.filter(source => source.source_id === 51);
 
       if (sources.length === 0) {
         const notAvailable = 'Not Available on Subscription Streaming Services';
@@ -200,6 +206,14 @@ const TitleDetails = () => {
       if (youTubePremium.length >= 1) {
         const youTubePremiumUrl = youTubePremium[0].web_url;
         setYouTubePremiumUrl(youTubePremiumUrl);
+      }
+      if (showtimeAmazonPrime.length >= 1) {
+        const showtimeAmazonPrimeUrl = showtimeAmazonPrime[0].web_url;
+        setShowtimeAmazonPrimeUrl(showtimeAmazonPrimeUrl);
+      }
+      if (cbsAllAccess.length >= 1) {
+        const cbsAllAccessUrl = cbsAllAccess[0].web_url;
+        setCbsAllAccessUrl(cbsAllAccessUrl);
       }
     }
   }, []);
@@ -341,9 +355,8 @@ const TitleDetails = () => {
         poster: titleDetails.poster,
         release_date: titleDetails.release_date,
         runtime: titleDetails.runtime,
-        similar_titles: titleDetails.similar_titles,
-        sources: titleDetails.sources,
-        
+        similar_titles: titleDetails.similar_titles.slice(0, 5),
+        sources: titleDetails.sources.filter(source => source.type==='sub'),
         trailer: titleDetails.trailer,
         trailer_thumbnail: titleDetails.trailer_thumbnail,
         us_rating: titleDetails.us_rating,
@@ -547,6 +560,20 @@ const TitleDetails = () => {
     {youTubePremiumUrl && (
       <Button variant='contained' color='primary' href={youTubePremiumUrl} target='_blank' rel='noopener noreferrer'>
         Watch on Youtube Premium
+      </Button>
+    )}
+
+    {/* Showtime via Amazon Prime Button */}
+    {showtimeAmazonPrimeUrl && (
+      <Button variant='contained' color='primary' href={showtimeAmazonPrimeUrl} target='_blank' rel='noopener noreferrer'>
+        Watch on Showtime via Amazon Prime
+      </Button>
+    )}
+
+    {/* CBS All Access Button */}
+    {cbsAllAccessUrl && (
+      <Button variant='contained' color='primary' href={cbsAllAccessUrl} target='_blank' rel='noopener noreferrer'>
+        Watch on CBS All Access
       </Button>
     )}
 

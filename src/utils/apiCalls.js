@@ -32,12 +32,12 @@ export const fetchSources = () => {
 // export const searchByGenre = (query) => { return fetch(`https://api.watchmode.com/v1/list-titles?genres=${query}&limit=2&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp`);
 // }
 
-export const searchByGenre = (query) => { return fetch(`https://api.watchmode.com/v1/list-titles?genres=${query}&limit=2&apiKey=WIu3mU2xnsXe9BTf7WlTqfAmFnw3uwR5kTG1RtbB`);
+export const searchByGenre = (query) => { return fetch(`https://api.watchmode.com/v1/list-titles?genres=${query}&limit=2&apiKey=sFxufTNO6mll5jhlTreUc9sdhug5Ct6XfsxBroaO`);
 }
 
 
 // fetch titles by title
-export const searchByTitle = (query) => { return fetch(`https://api.watchmode.com/v1/autocomplete-search/?apiKey=WIu3mU2xnsXe9BTf7WlTqfAmFnw3uwR5kTG1RtbB&search_value=${query}`);
+export const searchByTitle = (query) => { return fetch(`https://api.watchmode.com/v1/autocomplete-search/?apiKey=sFxufTNO6mll5jhlTreUc9sdhug5Ct6XfsxBroaO&search_value=${query}`);
 }
 
 // export const searchByName = (query) => { return fetch(`https://api.watchmode.com/v1/search/?apiKey=WIu3mU2xnsXe9BTf7WlTqfAmFnw3uwR5kTG1RtbB&search_field=name&search_value=${query}`);
@@ -46,7 +46,7 @@ export const searchByTitle = (query) => { return fetch(`https://api.watchmode.co
 export const searchByName = (query) => { return fetch(`https://api.themoviedb.org/3/search/person?query=${query}&api_key=9800abc2c4bf02eb04e906d6de333800&include_adult=false&language=en-US&page=1`);
 }
 
-export const searchTitlesByImdbId = (query) => { return fetch(`https://api.watchmode.com/v1/title/${query}/details?apiKey=WIu3mU2xnsXe9BTf7WlTqfAmFnw3uwR5kTG1RtbB&append_to_response=sources`);
+export const searchTitlesByImdbId = (query) => { return fetch(`https://api.watchmode.com/v1/title/${query}/details?apiKey=sFxufTNO6mll5jhlTreUc9sdhug5Ct6XfsxBroaO&append_to_response=sources`);
 }
 
 
@@ -55,7 +55,7 @@ export const searchTitlesByImdbId = (query) => { return fetch(`https://api.watch
 // export const fetchTitleDetails = (query) => { return fetch(`https://api.watchmode.com/v1/title/${query}/details/?append_to_response=sources&apiKey=SPq4jFg1pgbWR6mP6rZGPrBrNGisLbdUeu2P0TKp`);
 // } 
 
-export const fetchTitleDetails = (query) => { return fetch(`https://api.watchmode.com/v1/title/${query}/details/?append_to_response=sources&apiKey=WIu3mU2xnsXe9BTf7WlTqfAmFnw3uwR5kTG1RtbB`);
+export const fetchTitleDetails = (query) => { return fetch(`https://api.watchmode.com/v1/title/${query}/details/?append_to_response=sources&apiKey=sFxufTNO6mll5jhlTreUc9sdhug5Ct6XfsxBroaO`);
 } 
 
 // fetch motre title details by IMBD id from TMDB API

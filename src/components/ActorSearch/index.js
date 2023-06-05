@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 // import FormLabel from '@mui/material/FormLabel';
 
-import { searchByName, fetchTopPeoplePageOne, fetchTopPeoplePageTwo } from "../../utils/apiCalls";
+import { searchByName, fetchTopPeoplePageOne, fetchTopPeoplePageTwo, fetchTopPeoplePageThree, fetchTopPeoplePageFour, fetchTopPeoplePageFive } from "../../utils/apiCalls";
 
 const filter = createFilterOptions();
 
@@ -52,15 +52,16 @@ const ActorSearch = () => {
   }
 };
 
-useEffect(() => {
-  console.log("ActorSearch rendered", Date.now());
-  const fetchData = async () => {
-    await topPeopleNamesPageOne();
-    await topPeopleNamesPageTwo();
-  };
+// useEffect(() => {
+//   console.log("ActorSearch rendered", Date.now());
+//   const fetchData = async () => {
+//     await topPeopleNamesPageOne();
+//     await topPeopleNamesPageTwo();
+//     await topPeopleNamesPageThree();
+//   };
 
-  fetchData();
-}, []);
+//   fetchData();
+// }, []);
 
   const topPeopleNamesPageOne = async () => {
     try {
@@ -100,9 +101,32 @@ useEffect(() => {
     // console.log(topActors);
   };
 
+  const topPeopleNamesPageThree = async () => {
+    try {
+      const response = await fetchTopPeoplePageThree();
+      const data = await response.json();
+      console.log(data);
+
+      const newActors = data.results.map((person) => ({
+        name: person.name,
+        id: person.id
+      }));
+
+      setTopActors((prevActors) => [...prevActors, ...newActors]);
+      // console.log(topActors);
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log(topActors);
+  };
+
+
+
   useEffect(() => {
     console.log(topActors);
   }, [topActors]);
+
+  const sortedActors = [...topActors].sort((a, b) => a.name.localeCompare(b.name));
 
 
 return (
@@ -146,7 +170,7 @@ return (
         clearOnBlur
         handleHomeEndKeys
         id=""
-        options={topActors}
+        options={sortedActors}
         getOptionLabel={(option) => {
           // Value selected with enter, right from the input
           if (typeof option === 'string') {
