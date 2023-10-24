@@ -1,3 +1,3 @@
 ## streaming-master-search
 
-I used this repo to develop the front end for streamHub.
+I used this repo to begin the front end development for WatchTV.
